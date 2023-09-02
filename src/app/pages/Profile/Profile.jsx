@@ -7,7 +7,7 @@ function Profile() {
 
   return (
     <div>
-      <h1>BIENVENIDO</h1>
+      <h1>BIENVENIDOS</h1>
       {users.map((user) => (
         <div key={user.id}>
           <h1>usuario: {user.name}</h1>
