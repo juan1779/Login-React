@@ -1,0 +1,27 @@
+.container-card {
+  border: 5px solid #4479be;
+  padding: 3rem 2rem;
+  border-radius: 10%;
+  background-color: #173f72;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  height: max-content;
+  margin: 1rem 0;
+}
+
+.card-name {
+  font-size: 3rem;
+  padding: 0;
+  margin: 1rem 0;
+  color: #d3bfbf;
+}
+
+.card-text {
+  font-size: 1.5rem;
+  text-align: justify;
+  font-weight: 500;
+  color: #d3bfbf;
+}

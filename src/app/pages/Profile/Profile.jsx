@@ -1,19 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./Profile.css";
+import Cards from "../../component/Card";
 
 function Profile() {
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.users.users);
 
   return (
-    <div>
-      <h1>BIENVENIDOS</h1>
+    <div className="profile-container">
+      <div className="title-profile">
+        <h1>Bienvenido a Fast Legacy </h1>
+        <button type="submit" className="btnclose-login ">
+          logout
+        </button>
+      </div>
+
       {users.map((user) => (
-        <div key={user.id}>
-          <h1>usuario: {user.name}</h1>
-          <h2>DNI: {user.dni}</h2>
-          <h2>Edad: {user.age}</h2>
-        </div>
+        <Cards
+          key={user.id}
+          name={user.name}
+          age={user.age}
+          dni={user.dni}
+          avatar={user.avatar}
+          email={user.email}
+        />
       ))}
     </div>
   );

@@ -1,0 +1,36 @@
+.profile-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #d3bfbf;
+  box-sizing: border-box;
+}
+.title-profile {
+  width: 100%;
+  height: 5rem;
+  position: absolute;
+  top: 0%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
+}
+.btnclose-login {
+  background-color: #54107cc7;
+  color: #fff;
+  border: none;
+  font-size: 1.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin-right: 2rem;
+  height: min-content;
+  align-self: center;
+}
+
+.btnclose-login:hover {
+  transform: scale(1.02);
+  transition: 0.1s;
+}
