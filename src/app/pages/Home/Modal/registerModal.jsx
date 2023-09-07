@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import "./registerModal.css";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../store/features/user/userSlice";
 import { v4 as uuid } from "uuid";
 
@@ -20,27 +20,23 @@ function registerModal({ open, onClose }) {
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
+  const users = useSelector((state) => state.users.users);
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispath(addUser({ ...user, id: uuid() }));
-  };
+    const existingUser = users.find((userx) => userx.email === user.email);
 
-  //guardar datos
-  /*useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);*/
-
-  /*const obtenerRegistros = () => {
-    var datos = localStorage.getItem("user");
-    console.log(datos);
-    if (datos) {
-      return JSON.parse(datos);
+    if (existingUser) {
+      return alert("Email registred");
+    } else if (user.password.length <= 7) {
+      return alert("password must be greater than eight digits");
+    } else if (user.password === user.confirmPassword) {
+      dispath(addUser({ ...user, id: uuid() }));
+      alert("account Created");
     } else {
-      return [];
+      alert("passwords do not match");
     }
-  };*/
+  };
 
   return (
     <Modal
@@ -58,6 +54,7 @@ function registerModal({ open, onClose }) {
             name="name"
             placeholder="Enter your Full Name"
             onChange={handleChange}
+            required
           />
           <span>DNI</span>
           <input
@@ -66,6 +63,7 @@ function registerModal({ open, onClose }) {
             name="dni"
             placeholder="Enter your DNI"
             onChange={handleChange}
+            required
           />
           <span>AGE</span>
           <input
@@ -74,6 +72,7 @@ function registerModal({ open, onClose }) {
             name="age"
             placeholder="Enter Age"
             onChange={handleChange}
+            required
           />
           <span>E-MAIL</span>
           <input
@@ -82,6 +81,7 @@ function registerModal({ open, onClose }) {
             name="email"
             placeholder=" Enter your E-mail address"
             onChange={handleChange}
+            required
           />
           <span>PASSWORD</span>
           <input
@@ -90,6 +90,7 @@ function registerModal({ open, onClose }) {
             name="password"
             placeholder="*********"
             onChange={handleChange}
+            required
           />
           <span>CONFIRM PASSWORD</span>
           <input
@@ -98,6 +99,7 @@ function registerModal({ open, onClose }) {
             name="confirmPassword"
             placeholder="*********"
             onChange={handleChange}
+            required
           />
           <button type="submit" className="btnCreate ">
             Create Account

@@ -3,6 +3,7 @@ import "./Home.css";
 import Modals from "./Modal/registerModal";
 import img from "../../../assets/img.png";
 import Profile from "../Profile/Profile";
+import { useSelector } from "react-redux";
 
 function Home() {
   //Modal state
@@ -19,15 +20,29 @@ function Home() {
     password: "",
   });
 
+  const users = useSelector((state) => state.users.users);
+
   const handleChange = (e) => {
     setDataLogin({ [e.target.name]: e.target.value });
-    console.log(dataLogin);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userValidation = users.find(
+      (user) =>
+        user.email === dataLogin.email && user.password === dataLogin.password
+    );
+
+    if (userValidation) {
+      alert("login");
+    } else {
+      alert("fallo en registro");
+    }
   };
 
   return (
     <div className="container">
       <form className="formLogin">
-        {/* <!-- Login --> */}
         <img className="imgLogin" src={img} alt="image" />
 
         <input
@@ -35,6 +50,7 @@ function Home() {
           name="email"
           placeholder="Email"
           onChange={handleChange}
+          required
         />
 
         <input
@@ -42,17 +58,22 @@ function Home() {
           name="password"
           placeholder="Password"
           onChange={handleChange}
+          required
         />
         <div>
-          <button type="submit" className="btnLogin btnActive">
-            LOG IN
+          <button
+            type="submit"
+            onClick={onSubmit}
+            className="btnLogin btnActive"
+          >
+            LOGIN
           </button>
         </div>
         <button onClick={handleOpen} className="btnOpen btnActive ">
           SIGN IN
         </button>
       </form>
-      <Profile />
+
       <Modals open={open} onClose={handleClose} />
     </div>
   );

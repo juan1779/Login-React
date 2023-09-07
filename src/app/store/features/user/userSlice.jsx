@@ -1,15 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const users =
+  localStorage.getItem("users") !== null
+    ? JSON.parse(localStorage.getItem("users"))
+    : [];
 
-console.log(initialState);
+const initialState = {
+  users,
+};
+
+const setItemFunc = (users) => {
+  localStorage.setItem("users", JSON.stringify(users));
+};
 
 export const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
     addUser: (state, action) => {
-      state.push(action.payload);
+      const newUser = action.payload;
+
+      state.users.push({
+        id: newUser.id,
+        name: newUser.name,
+        dni: newUser.dni,
+        age: newUser.age,
+        email: newUser.email,
+        password: newUser.password,
+        confirmPassword: newUser.confirmPassword,
+        avatar: newUser.avatar,
+      });
+
+      setItemFunc(state.users.map((user) => user));
     },
   },
 });
