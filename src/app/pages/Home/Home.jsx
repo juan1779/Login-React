@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import "./Home.css";
 import Modals from "./Modal/registerModal";
 import img from "../../../assets/img.png";
-import Profile from "../Profile/Profile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/features/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [miLogin, setMiLogin] = useState(false);
+  const navigate = useNavigate();
   //info redux
   const users = useSelector((state) => state.users.users);
+  const dispatch = useDispatch();
 
   //Modal state
   const [open, setOpen] = useState(false);
@@ -36,16 +38,14 @@ function Home() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     const userValidation = users.find(
       (user) =>
         user.email === dataLoginEmail && user.password === dataLoginPassword
     );
 
     if (userValidation) {
-      setMiLogin(true);
-      alert("login");
-      document.getElementById("form_login").style.display = "none";
+      dispatch(login());
+      navigate("/profile");
     } else {
       alert("incorrect credentials");
     }
@@ -87,7 +87,6 @@ function Home() {
       </form>
 
       <Modals open={open} onClose={handleClose} />
-      {miLogin === true && <Profile />}
     </div>
   );
 }
