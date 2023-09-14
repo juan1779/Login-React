@@ -44,7 +44,7 @@ function Home() {
     );
 
     if (userValidation) {
-      dispatch(login());
+      dispatch(login({ dataLoginEmail }));
       navigate("/profile");
     } else {
       alert("incorrect credentials");

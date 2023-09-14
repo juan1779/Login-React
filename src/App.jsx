@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const login = useSelector((state) => state.login.userLogin);
-  console.log(login);
+
   return (
     <div>
       <BrowserRouter>
