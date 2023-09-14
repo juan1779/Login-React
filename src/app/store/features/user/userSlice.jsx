@@ -22,13 +22,14 @@ export const userSlice = createSlice({
 
       state.users.push({
         id: newUser.id,
+
         name: newUser.name,
         dni: newUser.dni,
         age: newUser.age,
         email: newUser.email,
         password: newUser.password,
         confirmPassword: newUser.confirmPassword,
-        avatar: newUser.avatar,
+        gender: newUser.gender,
       });
 
       setItemFunc(state.users.map((user) => user));

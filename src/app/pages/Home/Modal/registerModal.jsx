@@ -1,14 +1,25 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CloseIcon from "@mui/icons-material/Close";
 import "./registerModal.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../store/features/user/userSlice";
 import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 function registerModal({ open, onClose }) {
+  const navigate = useNavigate();
+  //redux info
   const dispath = useDispatch();
+  const users = useSelector((state) => state.users.users);
+
+  //register info
   const [user, setUser] = useState({
+    gender: "",
     name: "",
     dni: "",
     age: "",
@@ -17,10 +28,13 @@ function registerModal({ open, onClose }) {
     confirmPassword: "",
   });
 
+  //clean info
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const users = useSelector((state) => state.users.users);
+  console.log(user);
+  //Submit info
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -33,6 +47,7 @@ function registerModal({ open, onClose }) {
     } else if (user.password === user.confirmPassword) {
       dispath(addUser({ ...user, id: uuid() }));
       alert("account Created");
+      location.reload();
     } else {
       alert("passwords do not match");
     }
@@ -47,6 +62,10 @@ function registerModal({ open, onClose }) {
     >
       <Box className="style">
         <form onSubmit={handleSubmit} className="formRegister">
+          <button onClick={onClose} className="btnCloseModal">
+            <CloseIcon />
+          </button>
+
           <span>FULL NAME</span>
           <input
             className="formInput"
@@ -56,6 +75,7 @@ function registerModal({ open, onClose }) {
             onChange={handleChange}
             required
           />
+
           <span>DNI</span>
           <input
             className="formInput"
@@ -101,6 +121,30 @@ function registerModal({ open, onClose }) {
             onChange={handleChange}
             required
           />
+          <span>GENDER</span>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel
+              name="gender"
+              value="female"
+              control={<Radio />}
+              label="Female"
+              onChange={handleChange}
+              required
+            />
+            <FormControlLabel
+              name="gender"
+              value="male"
+              control={<Radio />}
+              label="Male"
+              onChange={handleChange}
+              required
+            />
+          </RadioGroup>
+
           <button type="submit" className="btnCreate ">
             Create Account
           </button>
